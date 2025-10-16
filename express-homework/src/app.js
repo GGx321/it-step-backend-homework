@@ -16,6 +16,7 @@ const commentsRoutes = require('./routes/homework/comments.routes');
 const apiProductsRoutes = require('./routes/api/products');
 const apiOrdersRoutes = require('./routes/api/orders');
 const apiDashboardRoutes = require('./routes/api/dashboard');
+const apiCategoriesRoutes = require('./routes/api/categories');
 const requestLogger = require('./middleware/requestLogger');
 
 const app = express();
@@ -82,6 +83,7 @@ app.use('/comments', commentsRoutes);
 app.use('/api/products', apiProductsRoutes);
 app.use('/api/orders', apiOrdersRoutes);
 app.use('/api/dashboard', apiDashboardRoutes);
+app.use('/api/categories', apiCategoriesRoutes);
 
 // Home page
 app.get('/', (req, res) => {

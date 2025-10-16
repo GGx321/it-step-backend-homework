@@ -1,0 +1,64 @@
+<% 
+    const isEdit = action === 'edit';
+    const formTitle = isEdit ? 'Редагування категорії' : 'Створення категорії';
+    const formAction = isEdit ? `/api/categories/edit/${category.id}` : '/api/categories/new';
+    const buttonText = isEdit ? '💾 Зберегти зміни' : '➕ Створити категорію';
+    
+    const body = `
+        <h2>${formTitle}</h2>
+        
+        ${error ? `
+            <div class="message error">
+                ⚠️ ${error}
+            </div>
+        ` : ''}
+        
+        <form method="POST" action="${formAction}">
+            <div style="margin-bottom: 15px;">
+                <label for="name" style="display: block; margin-bottom: 5px; font-weight: bold;">
+                    Назва категорії: <span style="color: red;">*</span>
+                </label>
+                <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    value="${category ? category.name : ''}" 
+                    placeholder="Введіть назву категорії"
+                    maxlength="30"
+                    required
+                    style="width: 100%; max-width: 500px;"
+                >
+                <small style="color: #666; display: block; margin-top: 5px;">
+                    Максимум 30 символів
+                </small>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <button type="submit">${buttonText}</button>
+                <a href="/api/categories" class="btn" style="background-color: #999; margin-left: 10px;">❌ Скасувати</a>
+            </div>
+        </form>
+        
+        <div style="margin-top: 30px; padding: 15px; background-color: #f0f0f0; border-radius: 5px;">
+            <h4>💡 Підказки:</h4>
+            <ul>
+                <li>Назва категорії обов'язкова</li>
+                <li>Максимальна довжина: 30 символів</li>
+                <li>Використовуйте зрозумілі назви</li>
+            </ul>
+        </div>
+    `;
+    
+    const sidebar = `
+        <h4>Інформація</h4>
+        <p>${isEdit ? 'Редагування існуючої категорії' : 'Створення нової категорії товарів'}</p>
+        ${isEdit && category ? `
+            <hr>
+            <h4>Поточні дані</h4>
+            <p><strong>ID:</strong> ${category.id}</p>
+            <p><strong>Назва:</strong> ${category.name}</p>
+            <p><strong>Створено:</strong><br>${new Date(category.createdAt).toLocaleDateString('uk-UA')}</p>
+        ` : ''}
+    `;
+%>
+<%- include('layout', { body, sidebar, title: formTitle }) %>

@@ -1,0 +1,50 @@
+<% 
+    const body = `
+        <h2>Деталі категорії</h2>
+        
+        ${message ? `<div class="message error">${message}</div>` : ''}
+        
+        ${category ? `
+            <table>
+                <tr>
+                    <th style="width: 200px;">ID категорії:</th>
+                    <td>${category.id}</td>
+                </tr>
+                <tr>
+                    <th>Назва:</th>
+                    <td><strong>${category.name}</strong></td>
+                </tr>
+                <tr>
+                    <th>Дата створення:</th>
+                    <td>${new Date(category.createdAt).toLocaleDateString('uk-UA', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    })} ${new Date(category.createdAt).toLocaleTimeString('uk-UA', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    })}</td>
+                </tr>
+            </table>
+            <br>
+            <a href="/api/categories" class="btn">⬅️ Назад до списку</a>
+            <a href="/api/categories/edit/${category.id}" class="btn">✏️ Редагувати</a>
+            <a href="/api/categories/delete/${category.id}" class="btn btn-danger" onclick="return confirm('Видалити категорію ${category.name}?')">🗑 Видалити</a>
+        ` : `
+            <a href="/api/categories" class="btn">⬅️ Назад до списку</a>
+        `}
+    `;
+    
+    const sidebar = `
+        <h4>Інформація</h4>
+        <p>Детальна інформація про категорію товарів</p>
+        ${category ? `
+            <hr>
+            <h4>Дані</h4>
+            <p><strong>Назва:</strong><br>${category.name}</p>
+            <p><strong>Створено:</strong><br>${new Date(category.createdAt).toLocaleDateString('uk-UA')}</p>
+        ` : ''}
+    `;
+%>
+<%- include('layout', { body, sidebar, title: 'Деталі категорії' }) %>

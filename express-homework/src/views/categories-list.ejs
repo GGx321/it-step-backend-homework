@@ -1,0 +1,50 @@
+<% 
+    const body = `
+        <h2>Категорії товарів</h2>
+        
+        <div style="margin-bottom: 20px;">
+            ${count > 0 
+                ? `<p style="color: #4CAF50; font-weight: bold;">Всього категорій: ${count}</p>`
+                : `<p style="color: #999; font-style: italic;">Категорій поки немає</p>`
+            }
+        </div>
+        
+        <a href="/api/categories/new" class="btn">➕ Додати категорію</a>
+        
+        ${categories.length > 0 ? `
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Назва</th>
+                        <th>Дата створення</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${categories.map(c => `
+                        <tr>
+                            <td>${c.id}</td>
+                            <td>${c.name}</td>
+                            <td>${new Date(c.createdAt).toLocaleDateString('uk-UA')} ${new Date(c.createdAt).toLocaleTimeString('uk-UA', {hour: '2-digit', minute: '2-digit'})}</td>
+                            <td>
+                                <a href="/api/categories/${c.id}" class="btn">👁 Деталі</a>
+                                <a href="/api/categories/edit/${c.id}" class="btn">✏️ Редагувати</a>
+                                <a href="/api/categories/delete/${c.id}" class="btn btn-danger" onclick="return confirm('Видалити категорію ${c.name}?')">🗑 Видалити</a>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        ` : ''}
+    `;
+    
+    const sidebar = `
+        <h4>Статистика</h4>
+        <p>Всього категорій: ${count}</p>
+        <hr>
+        <h4>Швидкі дії</h4>
+        <a href="/api/categories/new" class="btn" style="width: 100%; text-align: center;">Додати категорію</a>
+    `;
+%>
+<%- include('layout', { body, sidebar, title: 'Категорії' }) %>
