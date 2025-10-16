@@ -1,0 +1,45 @@
+<% 
+    const body = `
+        <h2>Список замовлень</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Товар</th>
+                    <th>Кількість</th>
+                    <th>Дата</th>
+                    <th>Дії</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${orders.map(o => `
+                    <tr>
+                        <td>${o.id}</td>
+                        <td>${o.product}</td>
+                        <td>${o.quantity}</td>
+                        <td>${new Date(o.date).toLocaleDateString('uk-UA')}</td>
+                        <td>
+                            <a href="/api/orders/${o.id}" class="btn">Деталі</a>
+                            <a href="/api/orders/delete/${o.id}" class="btn btn-danger">Видалити</a>
+                        </td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+        
+        <h3>Нове замовлення</h3>
+        <form method="POST" action="/api/orders">
+            <input type="text" name="product" placeholder="Назва товару" required>
+            <input type="number" name="quantity" placeholder="Кількість" min="1" required>
+            <button type="submit">Додати замовлення</button>
+        </form>
+    `;
+    
+    const sidebar = `
+        <h4>Статистика</h4>
+        <p>Всього замовлень: ${orders.length}</p>
+        <p>Загальна кількість: ${orders.reduce((sum, o) => sum + o.quantity, 0)}</p>
+    `;
+%>
+<%- include('layout', { body, sidebar, title: 'Замовлення' }) %>

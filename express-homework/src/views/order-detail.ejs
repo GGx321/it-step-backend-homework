@@ -1,0 +1,39 @@
+<% 
+    const body = `
+        <h2>Деталі замовлення</h2>
+        
+        ${message ? `<div class="message error">${message}</div>` : ''}
+        
+        ${order ? `
+            <table>
+                <tr>
+                    <th>ID замовлення:</th>
+                    <td>${order.id}</td>
+                </tr>
+                <tr>
+                    <th>Товар:</th>
+                    <td>${order.product}</td>
+                </tr>
+                <tr>
+                    <th>Кількість:</th>
+                    <td>${order.quantity}</td>
+                </tr>
+                <tr>
+                    <th>Дата створення:</th>
+                    <td>${new Date(order.date).toLocaleString('uk-UA')}</td>
+                </tr>
+            </table>
+            <br>
+            <a href="/api/orders" class="btn">Назад до списку</a>
+            <a href="/api/orders/delete/${order.id}" class="btn btn-danger">Видалити</a>
+        ` : `
+            <a href="/api/orders" class="btn">Назад до списку</a>
+        `}
+    `;
+    
+    const sidebar = `
+        <h4>Інформація</h4>
+        <p>Детальна інформація про замовлення</p>
+    `;
+%>
+<%- include('layout', { body, sidebar, title: 'Деталі замовлення' }) %>

@@ -1,0 +1,48 @@
+<% 
+    const body = `
+        <h2>Пошук товарів</h2>
+        
+        <form method="GET" action="/api/products/search">
+            <input type="hidden" name="auth" value="true">
+            <input type="text" name="name" placeholder="Введіть назву товару" value="${query || ''}" required>
+            <button type="submit">Шукати</button>
+        </form>
+        
+        ${message ? `<div class="message ${message.includes('не знайдено') ? 'error' : ''}">${message}</div>` : ''}
+        
+        ${products.length > 0 ? `
+            <h3>Знайдено товарів: ${products.length}</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Назва</th>
+                        <th>Ціна (грн)</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${products.map(p => `
+                        <tr>
+                            <td>${p.id}</td>
+                            <td>${p.name}</td>
+                            <td>${p.price.toLocaleString('uk-UA')}</td>
+                            <td><a href="/api/products/${p.id}?auth=true" class="btn">Деталі</a></td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        ` : ''}
+    `;
+    
+    const sidebar = `
+        <h4>Підказки для пошуку</h4>
+        <ul>
+            <li>Ноутбук</li>
+            <li>Мишка</li>
+            <li>Клавіатура</li>
+            <li>Монітор</li>
+        </ul>
+    `;
+%>
+<%- include('layout', { body, sidebar, title: 'Пошук товарів' }) %>

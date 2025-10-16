@@ -1,0 +1,38 @@
+<% 
+    const body = `
+        <h2>Деталі товару</h2>
+        
+        ${message ? `<div class="message error">${message}</div>` : ''}
+        
+        ${product ? `
+            <table>
+                <tr>
+                    <th>ID:</th>
+                    <td>${product.id}</td>
+                </tr>
+                <tr>
+                    <th>Назва:</th>
+                    <td>${product.name}</td>
+                </tr>
+                <tr>
+                    <th>Ціна:</th>
+                    <td>${product.price.toLocaleString('uk-UA')} грн</td>
+                </tr>
+                <tr>
+                    <th>Категорія:</th>
+                    <td>${product.category}</td>
+                </tr>
+            </table>
+            <br>
+            <a href="/api/products?auth=true" class="btn">Назад до списку</a>
+        ` : `
+            <a href="/api/products?auth=true" class="btn">Назад до списку</a>
+        `}
+    `;
+    
+    const sidebar = `
+        <h4>Інформація</h4>
+        <p>Детальна інформація про товар</p>
+    `;
+%>
+<%- include('layout', { body, sidebar, title: 'Деталі товару' }) %>

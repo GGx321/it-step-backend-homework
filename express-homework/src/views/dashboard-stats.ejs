@@ -1,0 +1,40 @@
+<% 
+    const body = `
+        <h2>Статистика системи</h2>
+        
+        <table>
+            <tr>
+                <th>Показник</th>
+                <th>Значення</th>
+            </tr>
+            <tr>
+                <td>Користувачів</td>
+                <td>${stats.users}</td>
+            </tr>
+            <tr>
+                <td>Товарів</td>
+                <td>${stats.products}</td>
+            </tr>
+            <tr>
+                <td>Замовлень</td>
+                <td>${stats.orders}</td>
+            </tr>
+            <tr>
+                <td>Дохід</td>
+                <td>${stats.revenue.toLocaleString('uk-UA')} грн</td>
+            </tr>
+        </table>
+        
+        <br>
+        <a href="/api/dashboard/report" class="btn">Переглянути звіт</a>
+    `;
+    
+    const sidebar = `
+        <h4>Швидкі посилання</h4>
+        <ul>
+            <li><a href="/api/products?auth=true">Товари</a></li>
+            <li><a href="/api/orders">Замовлення</a></li>
+        </ul>
+    `;
+%>
+<%- include('layout', { body, sidebar, title: 'Статистика' }) %>

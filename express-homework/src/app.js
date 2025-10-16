@@ -12,6 +12,12 @@ const tasksRoutes = require('./routes/homework/tasks.routes');
 const productsRoutes = require('./routes/homework/products.routes');
 const commentsRoutes = require('./routes/homework/comments.routes');
 
+// MVC routes
+const apiProductsRoutes = require('./routes/api/products');
+const apiOrdersRoutes = require('./routes/api/orders');
+const apiDashboardRoutes = require('./routes/api/dashboard');
+const requestLogger = require('./middleware/requestLogger');
+
 const app = express();
 const PORT = process.env.PORT || 5001;
 
@@ -21,6 +27,8 @@ app.set('views', __dirname + '/views');
 
 // Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(requestLogger);
 app.use(logger);
 
 // Rate limiting (BONUS feature)
@@ -69,6 +77,11 @@ app.use('/register', registerRoutes);
 app.use('/tasks', tasksRoutes);
 app.use('/products', productsRoutes);
 app.use('/comments', commentsRoutes);
+
+// MVC API routes with prefix
+app.use('/api/products', apiProductsRoutes);
+app.use('/api/orders', apiOrdersRoutes);
+app.use('/api/dashboard', apiDashboardRoutes);
 
 // Home page
 app.get('/', (req, res) => {

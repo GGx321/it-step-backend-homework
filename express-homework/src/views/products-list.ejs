@@ -1,0 +1,45 @@
+<% 
+    const body = `
+        <h2>Список товарів</h2>
+        
+        ${message ? `<div class="message ${message.includes('не') ? 'error' : ''}">${message}</div>` : ''}
+        
+        ${products.length > 0 ? `
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Назва</th>
+                        <th>Ціна (грн)</th>
+                        <th>Категорія</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${products.map(p => `
+                        <tr>
+                            <td>${p.id}</td>
+                            <td>${p.name}</td>
+                            <td>${p.price.toLocaleString('uk-UA')}</td>
+                            <td>${p.category}</td>
+                            <td><a href="/api/products/${p.id}?auth=true" class="btn">Деталі</a></td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        ` : ''}
+    `;
+    
+    const sidebar = `
+        <h4>Категорії</h4>
+        <ul>
+            <li>Електроніка</li>
+            <li>Аксесуари</li>
+        </ul>
+        <h4>Останні товари</h4>
+        <ul>
+            ${products.slice(-3).map(p => `<li>${p.name}</li>`).join('')}
+        </ul>
+    `;
+%>
+<%- include('layout', { body, sidebar, title: 'Товари' }) %>
