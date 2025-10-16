@@ -5,6 +5,11 @@ const errorHandler = require('./middleware/errorHandler');
 const booksRoutes = require('./routes/books.routes');
 const usersRoutes = require('./routes/users.routes');
 
+const profileRoutes = require('./routes/homework/profile.routes');
+const coursesRoutes = require('./routes/homework/courses.routes');
+const registerRoutes = require('./routes/homework/register.routes');
+const tasksRoutes = require('./routes/homework/tasks.routes');
+
 const app = express();
 const PORT = process.env.PORT || 5001;
 
@@ -50,6 +55,12 @@ app.use(rateLimit);
 // Routes
 app.use('/api/books', booksRoutes);
 app.use('/api/users', requireApiKey, usersRoutes);
+
+// Homework routes
+app.use('/profile', profileRoutes);
+app.use('/courses', coursesRoutes);
+app.use('/register', registerRoutes);
+app.use('/tasks', tasksRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
