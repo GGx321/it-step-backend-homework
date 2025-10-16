@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Коментарі</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        blockquote {
+            background-color: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            margin: 20px 0;
+            padding: 15px 20px;
+            position: relative;
+        }
+        .comment-author {
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 8px;
+        }
+        .comment-text {
+            color: #333;
+            line-height: 1.6;
+        }
+        .comment-date {
+            color: #999;
+            font-size: 12px;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        .no-comments {
+            text-align: center;
+            color: #999;
+            padding: 40px;
+            font-size: 18px;
+        }
+        .comments-count {
+            color: #666;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    
+    <div class="container">
+        <h1>Коментарі</h1>
+        
+        <% if (comments.length > 0) { %>
+            <p class="comments-count">Всього коментарів: <%= comments.length %></p>
+            
+            <% comments.forEach(comment => { %>
+                <blockquote>
+                    <div class="comment-author"><%= comment.author %></div>
+                    <div class="comment-text"><%= comment.text %></div>
+                    <% if (comment.date) { %>
+                        <div class="comment-date">
+                            <%= new Date(comment.date).toLocaleDateString('uk-UA', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric'
+                            }) %>
+                            <%= new Date(comment.date).toLocaleTimeString('uk-UA', {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            }) %>
+                        </div>
+                    <% } %>
+                </blockquote>
+            <% }) %>
+        <% } else { %>
+            <div class="no-comments">
+                Ще немає коментарів
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>

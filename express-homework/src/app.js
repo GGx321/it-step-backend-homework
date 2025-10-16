@@ -9,9 +9,15 @@ const profileRoutes = require('./routes/homework/profile.routes');
 const coursesRoutes = require('./routes/homework/courses.routes');
 const registerRoutes = require('./routes/homework/register.routes');
 const tasksRoutes = require('./routes/homework/tasks.routes');
+const productsRoutes = require('./routes/homework/products.routes');
+const commentsRoutes = require('./routes/homework/comments.routes');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
+
+// View engine setup
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
 
 // Middleware
 app.use(express.json());
@@ -61,6 +67,13 @@ app.use('/profile', profileRoutes);
 app.use('/courses', coursesRoutes);
 app.use('/register', registerRoutes);
 app.use('/tasks', tasksRoutes);
+app.use('/products', productsRoutes);
+app.use('/comments', commentsRoutes);
+
+// Home page
+app.get('/', (req, res) => {
+    res.render('index');
+});
 
 // Health check endpoint
 app.get('/health', (req, res) => {
